@@ -6,7 +6,7 @@
 /*   By: jtanner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:46:48 by jtanner           #+#    #+#             */
-/*   Updated: 2022/09/19 16:02:54 by jtanner          ###   ########.fr       */
+/*   Updated: 2022/09/19 19:42:50 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	initdudes(int n, int d, int e, int s, int o)
 {
-	t_dudes	*d;
-	
-	d->no = n;
-	d->hunger = d;
-	d->time_eat = e;
-	d->time_sleep = s;
-	d->eaten = o;
-	pthread_create(d->id, NULL, startdude, d);
+	t_dudes	*p;
+
+	p = (t_dudes *)malloc(sizeof (t_dudes));
+	p->no = n;
+	p->hunger = d;
+	p->time_eat = e;
+	p->time_sleep = s;
+	p->eaten = o;
+	pthread_create(&p->id, NULL, startdudes(p), NULL);
+}

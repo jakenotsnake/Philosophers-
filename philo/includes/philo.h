@@ -6,7 +6,7 @@
 /*   By: jtanner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:45 by jtanner           #+#    #+#             */
-/*   Updated: 2022/09/19 16:02:51 by jtanner          ###   ########.fr       */
+/*   Updated: 2022/09/19 19:28:02 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,25 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
 # define INT_MAX	2147483647
 # define INT_MIN	-2147483648
 
-typedef	struct	t_dudes
+typedef	struct	s_dudes
 {
-	pthread_t	id;
-	int	no;
-	int	hunger;
-	int	time_eat;
-	int	time_sleep;
-	int	eaten;
-}				s_dudes;
+	pthread_t		id;
+	int				no;
+	int				hunger;
+	int				time_eat;
+	int				time_sleep;
+	int				eaten;
+	struct timeval	time;
+}				t_dudes;
 
+int	main(int ac, char **av);
+void	*startdudes(t_dudes *p);
+void	initdudes(int n, int d, int e, int s, int o);
 
 
 #endif
