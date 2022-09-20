@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 		while (c++ < 4)
 			i[c] = atoi(av[c + 1]);
 		i[0] += 1;
-		startthread(i[0], i[1], i[2], i[3], i[4]);
+		startthread(i);
 	}
 	return(0);
 	exit(0);

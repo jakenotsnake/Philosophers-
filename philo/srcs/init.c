@@ -12,25 +12,36 @@
 
 #include "../includes/philo.h"
 
-void	initdudes(int np, int d, int e, int s, int o)
+void	*initdudes(void *arg)
 {
 	t_dudes	*p;
+	int	*args;
 
+	args = (int *)arg;
+	printf("0:%d, 1:%d, 2:%d\n", args[0], args[1], args[2]);
 	p = (t_dudes *)malloc(sizeof (t_dudes));
 	p->id = pthread_self();
-	p->no = np;
-	p->hunger = d;
-	p->time_eat = e;
-	p->time_sleep = s;
-	p->eaten = o;
+	p->no = args[0];
+	p->hunger = args[1];
+	p->time_eat = args[2];
+	p->time_sleep = args[3];
+	p->eaten = args[4];
 	printf("no:%d, hunger:%d, eat:%d, sleep:%d, eaten:%d\n", p->no, p->hunger, p->time_eat, p->time_sleep, p->eaten);
 	startdudes(p);
+	return (0);
 }
 
-void	startthread(int n, int d, int e, int s, int o)
+void	startthread(int *i)
 {
-	pthread_t	t[n];
+	pthread_t	t[i[0]];
+	int c;
 	
-	while (n-- >=2)
-		pthread_create(&t[n], NULL, &initdudes(n, d, e, s, o), NULL);
+	c = i[0];
+	while (i[0]-- >=2)
+	{
+		printf("%d\n", i[0]);
+		pthread_create(&t[i[0]], NULL, initdudes, (void *)i);
+	}
+	while (c-- >=2)
+		pthread_join(t[c], NULL);
 }

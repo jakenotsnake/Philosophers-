@@ -33,8 +33,8 @@ typedef	struct	s_dudes
 
 int	main(int ac, char **av);
 void	startdudes(t_dudes *p);
-void	initdudes(int n, int d, int e, int s, int o);
-void	startthread(int n, int d, int e, int s, int o);
+void	*initdudes(void *args);
+void	startthread(int *i);
 
 
 #endif
