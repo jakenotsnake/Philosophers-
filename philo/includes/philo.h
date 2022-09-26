@@ -6,7 +6,7 @@
 /*   By: jtanner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:45 by jtanner           #+#    #+#             */
-/*   Updated: 2022/09/20 17:28:59 by jtanner          ###   ########.fr       */
+/*   Updated: 2022/09/23 20:41:34 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef	struct	s_dudes
 
 int	main(int ac, char **av);
 void	startdudes(t_dudes *p);
-void	*initdudes(void *args);
+void	*initdudes(int *arg);
 void	startthread(int *i);
-
+void	*initdudesb(void *args);
 
 #endif
