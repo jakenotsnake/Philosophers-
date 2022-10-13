@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 }
 
 void	*startdudes(void	*args)
-{printf("here\n");
+{
 	t_dudes	*p;
 
 	p = (t_dudes *)args;
