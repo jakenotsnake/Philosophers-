@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtanner <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:47:49 by jtanner           #+#    #+#             */
-/*   Updated: 2022/09/23 20:41:33 by jtanner          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:55:04 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 int	main(int ac, char **av)
@@ -27,16 +28,19 @@ int	main(int ac, char **av)
 	exit(0);
 }
 
-void	startdudes(t_dudes *p)
-{
-	gettimeofday(&p->time, NULL);
-	printf("%d: %d Has awoken\n", p->time.tv_usec, p->no);
-	usleep(300000);
-	printf("hello I am no.%d\n", p->no);
+void	*startdudes(void	*args)
+{printf("here\n");
+	t_dudes	*p;
+
+	p = (t_dudes *)args;
+	gettimeofday(&p->init, NULL);
+	p->le.tv_usec = p->init.tv_usec;
+	
+	printf("%d: dude %d Has awoken\n", p->init.tv_usec, p->no);
+	//sleep(10);
 	if (p->no % 2 == 0)
 		tryeat(p);
 	else
-		
-	tryeat(p);
-	pthread_exit(NULL);
+		dudesleep(p);
+	return (0);
 }

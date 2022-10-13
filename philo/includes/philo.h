@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pushswap.h                                         :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtanner <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:45 by jtanner           #+#    #+#             */
-/*   Updated: 2022/09/23 20:41:34 by jtanner          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:56:21 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,23 @@ typedef	struct	s_dudes
 {
 	pthread_t		id;
 	int				no;
-	int				hunger;
-	int				time_eat;
-	int				time_sleep;
-	int				eaten;
-	struct timeval	time;
+	long int		hunger;
+	long int		time_eat;
+	long int		time_sleep;
+	long int		eaten;
+	struct timeval	init;
+	struct timeval	le;
+	struct timeval	sa;
+	struct timeval	ea;
+	int				fork;
+	pthread_mutex_t	*keys;
 }				t_dudes;
 
-int	main(int ac, char **av);
-void	startdudes(t_dudes *p);
-void	*initdudes(int *arg);
-void	startthread(int *i);
-void	*initdudesb(void *args);
 
+int	main(int ac, char **av);
+void*	startdudes(void *args);
+t_dudes	*initdudes(t_dudes **p, int *i, int l, pthread_mutex_t *k);
+void	startthread(int *i);
+void	tryeat(t_dudes *p);
+void	dudesleep(t_dudes *p);
 #endif

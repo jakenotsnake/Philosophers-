@@ -3,65 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtanner <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:46:48 by jtanner           #+#    #+#             */
-/*   Updated: 2022/09/23 20:41:34 by jtanner          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:56:57 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+# include <string.h>
 
-void	*initdudesb(void *arg)
+
+t_dudes	*initdudes(t_dudes **p, int *i, int l, pthread_mutex_t **k)
 {
-	int	*args;
-
-	args = (int *)arg;
-	initdudes(args);
-	return (NULL);
-}
-
-void	*initdudes(int *args)
-{
-	t_dudes	*p[args[0]];
-	int c;
-
-	c = args[0];
-	p[c] = (t_dudes *)malloc(sizeof(t_dudes));
-	p[c]->id = pthread_self();
-	p[c]->no = args[0];
-	p[c]->hunger = args[1];
-	p[c]->time_eat = args[2];
-	p[c]->time_sleep = args[3];
-	p[c]->eaten = args[4];
-	startdudes(p[args[0]]);
-	return (NULL);
+	p[l] = (t_dudes *)malloc(sizeof(t_dudes));
+	p[l]->no = l;
+	p[l]->hunger = i[1];
+	p[l]->time_eat = i[2];
+	p[l]->time_sleep = i[3];
+	p[l]->eaten = i[4];
+	p[l]->keys = *k;
+	return (p[l]);
 }
 
 void	startthread(int *i)
 {
 	pthread_t	t[i[0]];
-	int c;
-	int j[i[0]][5];
 	int	l;
-	
-	c = i[0];
+	t_dudes *p[i[0]];
+	pthread_mutex_t k[i[0]];
+
 	l = 1;
 	while (l <= i[0])
 	{
-		j[l][0] = l;
-		j[l][1] = i[1];
-		j[l][2] = i[2];
-		j[l][3] = i[3];
-		j[l][4] = i[4];
-		usleep(1000);
-		pthread_create(&t[l], NULL, initdudesb, j[l]);
+		p[l] = initdudes(p, i, l, &k);
+		pthread_mutex_init(&k[l], NULL);
 		l++;
 	}
-	l = 0;
-	while (l <= i[0])
+	l--;
+	while (l > 0)
+	{	
+		pthread_create(&t[l], NULL, startdudes, p[l]);
+		l--;
+	}
+	l = i[0];
+	while (l > 0)
 	{
 		pthread_join(t[l], NULL);
-		l++;
+		l--;
 	}
 }
